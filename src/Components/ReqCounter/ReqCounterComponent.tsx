@@ -1,7 +1,9 @@
 /*global chrome*/
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {IRequestModel} from "../../Models/RequestModel";
 import "./ReqCounterComponent.scss"
+import bc from "../../background/background"
+import {tap} from "rxjs";
 
 const ReqCounterComponent: FC<{requests: IRequestModel[]}> = ({requests}) => {
     let downloadRequests = (requests: IRequestModel[]) => {
@@ -11,6 +13,14 @@ const ReqCounterComponent: FC<{requests: IRequestModel[]}> = ({requests}) => {
             url: url
         });
     }
+
+    useEffect(() => {
+        let subs = bc.listening$.pipe(
+            tap(e => {console.log("from react",e)})
+        ).subscribe()
+        return subs.unsubscribe
+    },[])
+
     return (
         <div className="req-counter-component-container">
             <span>Counter: {requests.length}</span>

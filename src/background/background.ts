@@ -11,13 +11,13 @@ let clearStorage = () => chrome.storage.local.set({
     requests: []
 })
 
-const request$ = new Subject<IRequestModel>();
-const listening$ = new BehaviorSubject<boolean>(false);
+const requestSubject = new Subject<IRequestModel>();
+const listeningSubject = new BehaviorSubject<boolean>(false);
 
 const REGEX_URLS: RegExp[] = [new RegExp(".*api-qa\\.junipermarket\\.com.*"), new RegExp(".*api-dev\\.junipermarket\\.com.*")]
 
-request$.pipe(
-    filter(e => listening$.value && REGEX_URLS.some(rx => rx.test(e.url))),
+let filteredReq$ = requestSubject.pipe(
+    filter(e => listeningSubject.value && REGEX_URLS.some(rx => rx.test(e.url))),
     distinct(e => e.time_stamp)
 ).subscribe(req => {
     chrome.storage.local.get("requests", (data) => {
@@ -31,15 +31,17 @@ request$.pipe(
     })
 })
 
-listening$.pipe(
+let listening$ = listeningSubject.pipe(
     distinctUntilChanged()
 )
+
+export default {incomingReq$: filteredReq$,listening$}
 
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     for (let [key, {oldValue, newValue}] of Object.entries(changes)) {
         if (key === "listening") {
-            listening$.next(newValue)
+            listeningSubject.next(newValue)
         }
     }
 });
@@ -56,7 +58,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             port.onMessage.addListener((message) => {
                 chrome.storage.local.get("listening", data => {
                     if (data.listening || true) {
-                        request$.next(message.payload)
+                        requestSubject.next(message.payload)
                     }
                 })
             })
