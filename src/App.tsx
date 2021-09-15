@@ -1,23 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import './App.scss';
+import BugFormComponent from "./Components/BugForm/BugFormComponent";
+import ReqListenerComponent, {RequestWatch} from "./Components/ReqListener/ReqListenerComponent";
+import ReqCounterComponent from "./Components/ReqCounter/ReqCounterComponent";
 
 function App() {
+    const [requests, setRequests] = useState<RequestWatch[]>([]);
+
+    useEffect(() => {console.log(requests)},[requests])
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+          <ReqListenerComponent onNewReq={(request: RequestWatch) => {setRequests([...requests,request])}}/>
+          <ReqCounterComponent requests={requests}/>
       </header>
     </div>
   );
