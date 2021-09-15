@@ -3,7 +3,6 @@ import React, {FC, useEffect, useState} from 'react';
 import {IRequestModel} from "../../Models/RequestModel";
 import "./ReqCounterComponent.scss"
 import bc from "../../background/background"
-import {tap} from "rxjs";
 
 const ReqCounterComponent = () => {
     const [requests, setRequests] = useState<IRequestModel[]>([]);
