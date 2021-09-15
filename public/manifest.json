@@ -14,6 +14,7 @@
     "activeTab",
     "tabs",
     "storage",
+    "scripting",
     "*://*.qa.junipermarket.com/*",
     "*://*.api-qa.junipermarket.com/*",
     "<all_urls>"
@@ -24,8 +25,7 @@
     "<all_urls>"
   ],
   "background":{
-    "service_worker": "./background.js",
-    "type": "module"
+    "service_worker": "./background.js"
   },
-  "web_accessible_resources" : [ "contentScript.js","injected.js" ]
+  "web_accessible_resources" : ["contentScript.js","injected.js"]
 }
