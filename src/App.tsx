@@ -1,18 +1,22 @@
+/*global chrome*/
 import React, {useEffect, useState} from 'react';
 import './App.scss';
-import BugFormComponent from "./Components/BugForm/BugFormComponent";
-import ReqListenerComponent, {RequestWatch} from "./Components/ReqListener/ReqListenerComponent";
 import ReqCounterComponent from "./Components/ReqCounter/ReqCounterComponent";
+import HttpMessageListenerComponent from "./Components/HttpMessagesListener/HttpMessageListenerComponent";
+import {IRequestModel} from "./Models/RequestModel";
+import bc from "./background/background";
+import {tap} from "rxjs";
 
 function App() {
-    const [requests, setRequests] = useState<RequestWatch[]>([]);
 
-    useEffect(() => {console.log(requests)},[requests])
   return (
     <div className="App">
       <header className="App-header">
-          <ReqListenerComponent onNewReq={(request: RequestWatch) => {setRequests([...requests,request])}}/>
-          <ReqCounterComponent requests={requests}/>
+          <HttpMessageListenerComponent/>
+          <ReqCounterComponent/>
+          <button onClick={() => {
+            chrome.storage.local.set({requests:[]})
+          }}>Clear Requests</button>
       </header>
     </div>
   );
