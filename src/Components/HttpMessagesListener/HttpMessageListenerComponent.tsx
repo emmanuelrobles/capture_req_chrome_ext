@@ -33,22 +33,13 @@ const HttpMessageListenerComponent: FC<{onNewRequest: (request: IRequestModel) =
     )
 
     useSubscription(request$,onNewRequest)
-    useSubscription(isListening$,setIsListening)
+    useSubscription(isListening$,v => {
+        setIsListening(v);
+        chrome.runtime.sendMessage({type:"listening",payload:v})
+    })
 
     useEffect(() => {
 
-        chrome.tabs.query({active: true, currentWindow: true}, function(arrayOfTabs) {
-            let activeTab = arrayOfTabs[0];
-            // @ts-ignore
-            chrome.tabs.executeScript(activeTab.id, {file: "contentScript.js"});
-        });
-
-        chrome.runtime.onConnect.addListener(port => {
-            port.onMessage.addListener((message:{payload:IRequestModel}) => {
-                console.log(message)
-                observable$.next(message.payload)
-            })
-        })
     },[])
 
     return (

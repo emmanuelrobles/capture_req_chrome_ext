@@ -8,15 +8,23 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "browser_action": {
+    "default_popup": "index.html"
   },
-  "permissions": ["webRequestBlocking", "downloads","webRequest","activeTab",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
     "*://*.qa.junipermarket.com/*",
     "*://*.api-qa.junipermarket.com/*",
     "<all_urls>"
   ],
-  "host_permissions": "<all_urls>",
+  "host_permissions": [
+    "*://*.qa.junipermarket.com/*",
+    "*://*.api-qa.junipermarket.com/*",
+    "<all_urls>"
+  ],
   "background":{
-    "scripts": ["popup.js"]
+    "service_worker": "./background.js"
   },
   "web_accessible_resources" : [ "contentScript.js","injected.js" ]
 }
