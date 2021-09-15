@@ -8,10 +8,15 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "browser_action": {
-    "default_popup": "index.html"
   },
-  "permissions": ["webRequestBlocking", "downloads","webRequest",
+  "permissions": ["webRequestBlocking", "downloads","webRequest","activeTab",
     "*://*.qa.junipermarket.com/*",
-    "*://*.api-qa.junipermarket.com/*"
-  ]
+    "*://*.api-qa.junipermarket.com/*",
+    "<all_urls>"
+  ],
+  "host_permissions": "<all_urls>",
+  "background":{
+    "scripts": ["popup.js"]
+  },
+  "web_accessible_resources" : [ "contentScript.js","injected.js" ]
 }

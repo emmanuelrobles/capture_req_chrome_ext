@@ -1,10 +1,10 @@
 /*global chrome*/
-
 import React, {FC} from 'react';
-import {RequestWatch} from "../ReqListener/ReqListenerComponent";
+import {IRequestModel} from "../../Models/RequestModel";
+import "./ReqCounterComponent.scss"
 
-const ReqCounterComponent: FC<{requests: RequestWatch[]}> = ({requests}) => {
-    let downloadRequests = (requests: RequestWatch[]) => {
+const ReqCounterComponent: FC<{requests: IRequestModel[]}> = ({requests}) => {
+    let downloadRequests = (requests: IRequestModel[]) => {
         let blob = new Blob([JSON.stringify(requests)], {type: "application/json"});
         let url = URL.createObjectURL(blob);
         chrome.downloads.download({
@@ -12,7 +12,7 @@ const ReqCounterComponent: FC<{requests: RequestWatch[]}> = ({requests}) => {
         });
     }
     return (
-        <div>
+        <div className="req-counter-component-container">
             <span>Counter: {requests.length}</span>
             <button onClick={() => downloadRequests(requests)}>Download trace</button>
         </div>

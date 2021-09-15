@@ -44,13 +44,11 @@ const ReqListenerComponent:FC<{onNewReq: (req: RequestWatch) => void}> = ({onNew
     useSubscription(request$, onNewReq)
 
     useEffect(() => {
-
-        if(listen && !chrome.webRequest.onBeforeRequest.hasListeners()){
+        if (listen && !chrome.webRequest.onBeforeRequest.hasListeners()) {
             chrome.webRequest.onBeforeRequest.addListener(emit.value,
                 {urls: ["*://*.api-qa.junipermarket.com/*"]},
                 ["blocking", "requestBody"]);
-        }else
-            if(!listen) {
+        } else if (!listen) {
             chrome.webRequest.onBeforeRequest.removeListener(emit.value);
             console.log(chrome.webRequest.onBeforeRequest.hasListeners())
         }
