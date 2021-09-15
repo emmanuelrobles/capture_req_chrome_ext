@@ -28,7 +28,7 @@ function uuidv4() {
 
 
     XHR.send = function(postData) {
-
+        var headers = this._requestHeaders;
         this.addEventListener('load', ev =>  {
             var endTime = (new Date()).toISOString();
 
@@ -66,7 +66,7 @@ function uuidv4() {
                             payload:{
                                 url: this._url,
                                 method: this._method,
-                                request_headers: this._requestHeaders,
+                                request_headers: headers,
                                 response_headers: responseHeaders,
                                 response_body:arr,
                                 request_body:postData,
