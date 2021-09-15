@@ -36,7 +36,7 @@ let listening$ = listeningSubject.pipe(
     distinctUntilChanged()
 )
 
-let allRequest$ = allRequestSubject.asObservable();
+let allRequest$ = allRequestSubject;
 
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {

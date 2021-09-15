@@ -2,7 +2,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {IRequestModel} from "../../Models/RequestModel";
 
-const HttpMessageListenerComponent: FC<{onNewRequest: (request: IRequestModel) => void}> = ({onNewRequest}) => {
+const HttpMessageListenerComponent = () => {
     const [isListening,setIsListening] = useState(false)
 
 
