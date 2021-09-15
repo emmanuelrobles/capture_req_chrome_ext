@@ -13,6 +13,7 @@ let clearStorage = () => chrome.storage.local.set({
 
 const requestSubject = new Subject<IRequestModel>();
 const listeningSubject = new BehaviorSubject<boolean>(false);
+const allRequestSubject = new BehaviorSubject<IRequestModel[]>([]);
 
 const REGEX_URLS: RegExp[] = [new RegExp(".*api-qa\\.junipermarket\\.com.*"), new RegExp(".*api-dev\\.junipermarket\\.com.*")]
 
@@ -35,13 +36,16 @@ let listening$ = listeningSubject.pipe(
     distinctUntilChanged()
 )
 
-export default {incomingReq$: filteredReq$,listening$}
+let allRequest$ = allRequestSubject.asObservable();
 
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     for (let [key, {oldValue, newValue}] of Object.entries(changes)) {
         if (key === "listening") {
             listeningSubject.next(newValue)
+        }
+        if (key === "requests") {
+            allRequestSubject.next(newValue)
         }
     }
 });
@@ -73,3 +77,7 @@ chrome.runtime.onConnect.addListener(function (port) {
         port.postMessage("Hi Popup.js");
     });
 })
+
+
+export default {incomingReq$: filteredReq$,listening$,allRequest$}
+
