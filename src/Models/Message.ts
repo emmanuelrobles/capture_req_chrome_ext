@@ -4,7 +4,6 @@ export interface IMessage<T>{
 }
 
 export enum MessageType {
-    GET_STATE,
     RECORD_START,
     RECORD_STOP
 }

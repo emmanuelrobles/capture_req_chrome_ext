@@ -1,6 +1,5 @@
-
-// @ts-ignore
 import Port = chrome.runtime.Port;
+import JSZip from "jszip";
 
 function onNewMessage(event: any) {
     // Only accept messages from the same frame
@@ -46,11 +45,29 @@ if (!chrome.runtime.onMessage.hasListeners()) {
             if (request.message === "record_stop") {
                 if(!!mediaRecord){
                     mediaRecord.onstop = (ev) => {
+                        let videoBlob = new Blob(chunks, {type: "video/mp4;"})
                         console.log(request.web_requests)
-                        let blob = new Blob(chunks, {type: "video/mp4;"})
+                        let web_request = new Blob([JSON.stringify(request.web_requests)], {type: "application/json"});
                         chunks = []
-                        let url = URL.createObjectURL(blob)
-                        window.open(url, 'data');
+                        // maybe for later use? it takes the blob file (video) and convert it to a string,
+                        // cant pass a blob to bg script :(
+                        //
+                        // let reader = new FileReader()
+                        // reader.readAsDataURL(blob)
+                        // reader.onloadend = () => {
+                        //     let base64Data = reader.result
+                        //     console.log("CS",base64Data)
+                        //     sendResponse({video_base64:base64Data})
+                        // }
+
+                        let zip = new JSZip()
+                        zip.file("video.mp4",videoBlob)
+                        zip.file("web_requests,json",web_request)
+                        zip.generateAsync({type:"blob"}).then(res => {
+                            let url = URL.createObjectURL(res)
+                            window.open(url, 'data');
+                        })
+
                     }
                     mediaRecord?.stop()
                 }

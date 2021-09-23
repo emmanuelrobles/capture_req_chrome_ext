@@ -1,7 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/background/background.ts',
+    entry: {
+        background: './src/background/background.ts',
+        contentScript: './src/background/contentScript.ts',
+    },
     module: {
         rules: [
             {
@@ -21,7 +24,7 @@ module.exports = {
     },
     devtool: 'source-map',
     output: {
-        filename: 'background.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, '../build'),
     },
 };
