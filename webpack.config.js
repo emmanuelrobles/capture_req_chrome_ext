@@ -19,7 +19,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts','.js']
+        extensions: ['.ts', '.js']
     },
     output: {
         filename: '[name].js',
@@ -27,8 +27,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-        chunks: ['popup']
-    }),
+            chunks: ['popup'],
+            filename: "popup.html"
+        }),
         new CopyPlugin({
             patterns: [
                 {
