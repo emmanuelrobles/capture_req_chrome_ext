@@ -7,5 +7,28 @@
   },
   "action": {
     "default_popup": "popup.html"
-  }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "content_script.js"
+      ],
+      "matches": [
+        "https://*.junipermarket.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js"
+      ],
+      "matches": [
+        "https://*.junipermarket.com/*"
+      ]
+    }
+  ]
 }

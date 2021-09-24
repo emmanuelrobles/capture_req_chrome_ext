@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "author": "emmanuelrobles",
   "license": "ISC",
@@ -15,5 +15,8 @@
     "typescript": "^4.4.3",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "@types/chrome": "^0.0.158"
   }
 }

@@ -6,6 +6,8 @@ module.exports = {
     entry: {
         popup: './src/popup.ts',
         background: './src/scripts/background.ts',
+        content_script: './src/scripts/content_script.ts',
+        injected: './src/scripts/injected.ts',
     },
     module: {
         rules: [
