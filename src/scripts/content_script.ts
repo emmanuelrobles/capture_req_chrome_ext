@@ -1,6 +1,5 @@
 import Port = chrome.runtime.Port;
 import {MESSAGE_SOURCE} from "../models/injected_types";
-import {MessageHelper} from "../helpers/message_helper";
 
 function onNewMessage(event: any) {
     // Only accept messages from the same frame
@@ -11,7 +10,7 @@ function onNewMessage(event: any) {
     const message = event.data;
 
     // Only accept messages that we know are ours
-    if (typeof message !== "object" || message === null || !!message.source && message.source !== MESSAGE_SOURCE || !MessageHelper.isValidSource(message.payload.url)) {
+    if (typeof message !== "object" || message === null || !!message.source && message.source !== MESSAGE_SOURCE) {
         return;
     }
     port?.postMessage(message.payload);

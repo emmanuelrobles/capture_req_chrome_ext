@@ -5,6 +5,6 @@ function isValidSourceExpression(regex: RegExp[]) {
 
 }
 
-export abstract class MessageHelper {
+export abstract class RequestHelper {
     public static isValidSource = isValidSourceExpression(REGEX_URLS)
 }

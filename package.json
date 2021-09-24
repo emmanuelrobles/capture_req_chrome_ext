@@ -9,6 +9,7 @@
   "author": "emmanuelrobles",
   "license": "ISC",
   "devDependencies": {
+    "@types/rx": "^4.1.2",
     "copy-webpack-plugin": "^9.0.1",
     "html-webpack-plugin": "^5.3.2",
     "ts-loader": "^9.2.6",
@@ -17,6 +18,7 @@
     "webpack-cli": "^4.8.0"
   },
   "dependencies": {
-    "@types/chrome": "^0.0.158"
+    "@types/chrome": "^0.0.158",
+    "rxjs": "^7.3.0"
   }
 }
